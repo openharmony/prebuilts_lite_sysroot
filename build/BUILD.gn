@@ -97,6 +97,7 @@ build_ext_component("build_sysroot") {
 }
 
 action_foreach("strip") {
+  no_default_deps = true
   deps = [ ":build_sysroot" ]
   script = "//build/lite/run_shell_cmd.py"
   set_sources_assignment_filter([ "*.txt" ])
@@ -129,5 +130,8 @@ config("sysroot_flags") {
 
 group("build") {
   all_dependent_configs = [ ":sysroot_flags" ]
-  deps = [ ":build_sysroot" ]
+  deps = [
+    ":build_sysroot",
+    ":strip",
+  ]
 }
