@@ -34,7 +34,7 @@ CROSS_COMPILE = $(GCC:%gcc=%)
 CC = $(GCC) $(ARCH_CFLAGS)
 MULTILIB = $(patsubst %.,%,$(shell $(CC) -print-multi-directory))
 else
-TARGET = $(ARCH)-liteos
+TARGET = $(ARCH)-liteos-ohos
 CLANG ?= clang
 CROSS_COMPILE = $(CLANG:%clang=%llvm-)
 CC = $(CLANG) --target=$(TARGET) $(ARCH_CFLAGS)
@@ -161,7 +161,7 @@ musl_patch_for_linux_user: musl_copy_for_linux_user
 
 musl_install_for_linux_user: CFLAGS += -I $(LINUXHDRDIR)
 ifeq ($(GCC),)
-musl_install_for_linux_user: TARGET = $(ARCH)-linux-ohosmusl
+musl_install_for_linux_user: TARGET = $(ARCH)-linux-ohos
 endif
 musl_install_for_linux_user: musl_patch_for_linux_user
 	$(HIDE) cd musl_copy_for_linux_user && mkdir -p $(MUSLBUILDDIR) && cd $(MUSLBUILDDIR) && \
