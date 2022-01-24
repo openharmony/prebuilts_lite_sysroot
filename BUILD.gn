@@ -33,6 +33,9 @@ group("sysroot") {
   if (ohos_kernel_type != "liteos_m") {
     deps = [ "build" ]
   } else if (!ohos_kernel_is_prebuilt) {
-    all_dependent_configs = [ "//kernel/liteos_m:public" ]
+    all_dependent_configs = [
+      "//kernel/liteos_m:public",
+      "//kernel/liteos_m:kconfig_config",
+    ]
   }
 }
