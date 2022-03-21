@@ -44,5 +44,5 @@ clang -o helloworld helloworld.c -target arm-liteos --sysroot=/my_ohos_root_path
 
 [Kernel subsystem](https://gitee.com/openharmony/docs/blob/master/en/readme/kernel.md)
 
-**prebuilts\_lite\_sysroot**
+[prebuilts\_lite\_sysroot](https://gitee.com/openharmony/prebuilts_lite_sysroot/blob/master/README.md)
 
