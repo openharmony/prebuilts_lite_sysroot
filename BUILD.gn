@@ -30,7 +30,10 @@
 group("sysroot") {
   print("ohos_build_compiler:", ohos_build_compiler)
   print("ohos_kernel_type:", ohos_kernel_type)
-  if (ohos_kernel_type != "liteos_m") {
+
+  # Mini system of liteos_a needs not prepare for build, so set "kernel_is_prebuilt is true" in
+  # config.json to avoid it.
+  if (ohos_kernel_type != "liteos_m" && !ohos_kernel_is_prebuilt) {
     deps = [ "build" ]
   } else if (!ohos_kernel_is_prebuilt) {
     all_dependent_configs = [
