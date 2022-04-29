@@ -47,7 +47,7 @@ SED_ARGS = -e '/install-libs:/s/if/and/g'
 
 TOPDIR = $(shell pwd)/../../../..
 MUSLDIR = $(TOPDIR)/third_party/musl
-LINUXKERNELDIR = $(TOPDIR)/third_party/Linux_Kernel
+LINUXKERNELDIR = $(TOPDIR)/kernel/linux/linux-5.10
 OPTRTDIR = $(TOPDIR)/third_party/optimized-routines
 NUTTXDIR = $(TOPDIR)/third_party/NuttX
 SYSROOTDIR = $(TOPDIR)/prebuilts/lite/sysroot
