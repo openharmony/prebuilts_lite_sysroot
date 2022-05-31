@@ -149,11 +149,14 @@ endif
 musl_patch_for_linux_user: musl_copy_for_linux_user
 	$(HIDE) cp -rfp $(MUSLDIR)/porting/linux/user/* $</
 
-musl_install_for_linux_user: CFLAGS += -I $(LINUXHDRDIR)
+musl_install_for_linux_user: LDFLAGS = $(shell $(CC) -print-file-name=libunwind.a) -Wl,--no-dependent-libraries
+musl_install_for_linux_user: SED_ARGS += -e 's,$$(AR) rc $$@ $$(AOBJS)$$,cp $$(shell $$(CC) -print-file-name=libunwind.a) $$@ \&\& &,g'
+musl_install_for_linux_user: CFLAGS += -fno-omit-frame-pointer -funwind-tables -fasynchronous-unwind-tables -rdynamic -I $(LINUXHDRDIR)
 musl_install_for_linux_user: TARGET = $(ARCH)-linux-ohosmusl
 musl_install_for_linux_user: musl_patch_for_linux_user
 	$(HIDE) cd musl_copy_for_linux_user && mkdir -p $(MUSLBUILDDIR) && cd $(MUSLBUILDDIR) && \
 	../configure --prefix=/usr --target=$(TARGET) --includedir=/usr/include/$(TARGET) --libdir=/usr/$(MULTILIB) \
+	    $(if $(LDFLAGS),LDFLAGS="$(LDFLAGS)",) \
 		CC="$(CC)" CROSS_COMPILE="$(CROSS_COMPILE)" CFLAGS="$(CFLAGS)" >/dev/null && \
 	sed $(SED_ARGS) Makefile | make -f- -sj install-headers install-libs DESTDIR=$(SYSROOTDIR)
 	$(HIDE) cp -rfp $(LINUXHDRDIR)/* $(SYSROOTDIR)/usr/include/$(TARGET)
